@@ -126,6 +126,51 @@ model.add(Dense(units=4, activation='softmax'))  # 指定分类激活函数
 
 model.summary()
 ```
+```
+model.compile(loss='categorical_crossentropy',  # 指定损失函数类型
+              optimizer='rmsprop',  # 优化器
+              metrics=['accuracy'])  # 评价指标
+```
+```
+history = model.fit(train_generator,
+                    epochs=epochs,
+                    validation_data=val_generator,
+                    callbacks=[
+                        tf.keras.callbacks.EarlyStopping(
+                            monitor='val_loss',
+                            patience=10,
+                            restore_best_weights=True
+                            )
+                        ]
+                    )
+model.save('model.h5')
+```
+```
+import matplotlib.pyplot as plt
+%matplotlib inline
+training_loss = history.history['loss']
+test_loss = history.history['val_loss']
+# 创建迭代数量
+epoch_count = range(1, len(training_loss) + 1)
+# 可视化损失历史
+plt.plot(epoch_count, training_loss, 'r--')
+plt.plot(epoch_count, test_loss, 'b-')
+plt.legend(['Training Loss', 'Test Loss'])
+plt.xlabel('Epoch')
+plt.ylabel('Loss')
+plt.show()
+```
+```
+train_acc = history.history['accuracy']
+test_acc = history.history['val_accuracy']
+epoch_counts = range(1, len(train_acc)+1)
+plt.plot(epoch_counts, train_acc, 'r--', marker='^')
+plt.plot(epoch_counts, test_acc, linestyle='-', marker='o', color='y')
+plt.title('accuracy condition')
+plt.legend(['train_acc', 'test_acc'])
+plt.xlabel('epochs')
+plt.ylabel('acc')
+```
 
 
 
