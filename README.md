@@ -174,6 +174,14 @@ plt.ylabel('acc')
 ```
 以上代码均已上传，可以直接查看。
 ## CNN的参数
-这个是本项目的重中之重，或者说是最精华的地方也不过分，毕竟训练了一个不准的模型除了为你自己积累经验似乎没什么别的作用
+这个是本项目的重中之重，或者说是最精华的地方也不过分，毕竟训练了一个不准的模型除了为你自己积累经验似乎没什么别的作用。那么到底要怎么调参，就是接下来讨论的地方。
+```
+optimizer='rmsprop'
+model.add(Dense(units=4, activation='softmax'))
+model.add(Conv2D(filters=128, kernel_size=(3, 3), activation='relu'))
+validation_split=0.15
+model.add(Dropout(0.5))
+```
+
 
 
