@@ -27,8 +27,8 @@ horizontal_flip=True  # 随机水平翻转
 CNN结构如下：  
 ![image](https://github.com/panhy25/Cell-classification-model-based-on-deep-convolutional-neural-network/blob/main/blood-cell-image-git/cnn.png)  
 其实说实话，我也不是很懂卷积层都在干什么，但是一次次的实验证明了这个CNN还可以。下面分批展示代码和注释：  
-看看kaggle的GPU有没有跑
 ```
+# 看看kaggle的GPU有没有跑
 import tensorflow as tf
 import os
 os.environ['TF_XLA_FLAGS'] = '--tf_xla_enable_xla_devices'
@@ -50,6 +50,53 @@ import numpy as np
 import matplotlib.pyplot as plt
 import glob, os, random
 ```
+```
+# 统一定义图像像素的宽度和高度
+img_width, img_height = 224, 224
 
+# 定义训练集、验证集的图形路径（文件夹路径即可）
+train_data_dir = '../input/blood-cells/dataset2-master/dataset2-master/images/TRAIN'
+test_data_dir = '../input/blood-cells/dataset2-master/dataset2-master/images/TEST'
+
+# 模型训练的参数设置
+epochs = 50  # 迭代次数
+batch_size = 32  # 每个批量观测数
+
+# 图像输入维度设置
+if K.image_data_format() == 'channels_first':
+    input_shape = (3, img_width, img_height)
+else:
+    input_shape = (img_width, img_height, 3)
+```
+```
+train_datagen = ImageDataGenerator(validation_split=0.15,
+                                   rescale=1. / 255,  # 重缩放因子
+                                   shear_range=0.2,  # 剪切强度（以弧度逆时针方向剪切角度）
+                                   zoom_range=0.2,  # 随机缩放范围
+                                   vertical_flip=True,  #随机上下翻转
+                                   horizontal_flip=True  # 随机水平翻转
+                                  )
+test_datagen = ImageDataGenerator()
+train_generator = train_datagen.flow_from_directory(train_data_dir,
+                                                    subset="training",
+                                                    target_size=(img_width, img_height), 
+                                                    batch_size=batch_size,
+                                                    class_mode='categorical',  # 指定分类模式
+                                                    classes=['EOSINOPHIL','LYMPHOCYTE','MONOCYTE','NEUTROPHIL']
+                                                   )
+val_generator = train_datagen.flow_from_directory(train_data_dir,
+                                                  subset="validation",
+                                                  target_size=(img_width, img_height),
+                                                  batch_size=batch_size,
+                                                  class_mode='categorical',  # 指定分类模式
+                                                  classes=['EOSINOPHIL','LYMPHOCYTE','MONOCYTE','NEUTROPHIL']
+                                                  )
+test_generator = test_datagen.flow_from_directory(test_data_dir,
+                                                  target_size=(img_width, img_height),
+                                                  class_mode='categorical',  # 指定分类模式
+                                                  classes=['EOSINOPHIL','LYMPHOCYTE','MONOCYTE','NEUTROPHIL']
+                                                  ) 
+```
+```
 
 
