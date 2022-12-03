@@ -98,5 +98,34 @@ test_generator = test_datagen.flow_from_directory(test_data_dir,
                                                   ) 
 ```
 ```
+# CNN的构建
+model = Sequential()
+
+# 添加第一个卷积层/最大池化层
+model.add(Conv2D(filters=64,
+          kernel_size=(3, 3),
+          input_shape=input_shape, 
+          activation='relu')) 
+model.add(MaxPooling2D(pool_size=(2, 2))) 
+
+# 添加第二个卷积层/最大池化层
+model.add(Conv2D(filters=128, kernel_size=(3, 3), activation='relu'))
+model.add(MaxPooling2D(pool_size=(2, 2)))
+
+# 添加第三个卷积层/最大池化层
+model.add(Conv2D(filters=128, kernel_size=(3, 3), activation='relu'))
+model.add(MaxPooling2D(pool_size=(2, 2)))
+
+# 由于卷积层是 2D 空间，训练时需要将数据展平为 1D 空间
+model.add(Flatten())  # 添加展平层
+model.add(Dense(units=128, activation='relu'))  # 添加全连接层128个神经元
+model.add(Dropout(0.5))  # 添加丢弃层，防止过拟合
+
+# 输出层：最后一层，神经元控制输出的维度，并指定分类激活函数
+model.add(Dense(units=4, activation='softmax'))  # 指定分类激活函数
+
+model.summary()
+```
+
 
 
