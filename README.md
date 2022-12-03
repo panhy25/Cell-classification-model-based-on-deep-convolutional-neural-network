@@ -145,6 +145,7 @@ history = model.fit(train_generator,
                     )
 model.save('model.h5')
 ```
+以上，CNN的构建已经结束，我们可以跑跑代码看看效果了。跑完了用下面的代码可以展示acc和loss的变化，值得一试。
 ```
 import matplotlib.pyplot as plt
 %matplotlib inline
