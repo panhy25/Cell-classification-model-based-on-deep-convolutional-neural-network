@@ -21,8 +21,35 @@ zoom_range=0.2,  # 随机缩放范围
 vertical_flip=True,  #随机上下翻转
 horizontal_flip=True  # 随机水平翻转
 ```
-遗憾的是我们不懂白细胞，只能每一次都试试。但是有一个原则，就是不要不符合实际的去做。
-![image]()
+遗憾的是我们不懂白细胞，只能每一次都试试。但是有一个原则，就是不要不符合实际的去做。下面是图片增强的效果：
+![image](https://github.com/panhy25/Cell-classification-model-based-on-deep-convolutional-neural-network/blob/main/blood-cell-image-git/change.png)
+## 三 CNN
+CNN结构如下：
+![image]((https://github.com/panhy25/Cell-classification-model-based-on-deep-convolutional-neural-network/blob/main/blood-cell-image-git/cnn.png))
+其实说实话，我也不是很懂卷积层都在干什么，但是一次次的实验证明了这个CNN还可以。下面分批展示代码和注释：  
+看看kaggle的GPU有没有跑
+```
+import tensorflow as tf
+import os
+os.environ['TF_XLA_FLAGS'] = '--tf_xla_enable_xla_devices'
+os.environ['TF_CPP_MIN_LOG_LEVEL']='2'
+print(tf.__version__)
+a = tf.constant(1.)
+b = tf.constant(2.)
+print(a+b)
+print('GPU:', tf.test.is_gpu_available())
+```
+```
+from tensorflow.keras.preprocessing.image import ImageDataGenerator, load_img, img_to_array, array_to_img
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import Conv2D, MaxPooling2D
+from tensorflow.keras.layers import Activation, Dropout, Flatten, Dense
+from tensorflow.keras import backend as K
+from sklearn.metrics import accuracy_score
+import numpy as np
+import matplotlib.pyplot as plt
+import glob, os, random
+```
 
 
 
