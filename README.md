@@ -172,6 +172,8 @@ plt.legend(['train_acc', 'test_acc'])
 plt.xlabel('epochs')
 plt.ylabel('acc')
 ```
-
+以上代码均已上传，可以直接查看。
+## CNN的参数
+这个是本项目的重中之重，或者说是最精华的地方也不过分，毕竟训练了一个不准的模型除了为你自己积累经验似乎没什么别的作用
 
 
