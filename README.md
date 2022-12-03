@@ -22,5 +22,7 @@ vertical_flip=True,  #随机上下翻转
 horizontal_flip=True  # 随机水平翻转
 ```
 遗憾的是我们不懂白细胞，只能每一次都试试。但是有一个原则，就是不要不符合实际的去做。
+![image]()
+
 
 
