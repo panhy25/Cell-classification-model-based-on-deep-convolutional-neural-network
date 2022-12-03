@@ -24,8 +24,8 @@ horizontal_flip=True  # 随机水平翻转
 遗憾的是我们不懂白细胞，只能每一次都试试。但是有一个原则，就是不要不符合实际的去做。下面是图片增强的效果：
 ![image](https://github.com/panhy25/Cell-classification-model-based-on-deep-convolutional-neural-network/blob/main/blood-cell-image-git/change.png)
 ## 三 CNN
-CNN结构如下：
-![image]((https://github.com/panhy25/Cell-classification-model-based-on-deep-convolutional-neural-network/blob/main/blood-cell-image-git/cnn.png))
+CNN结构如下：  
+![image](https://github.com/panhy25/Cell-classification-model-based-on-deep-convolutional-neural-network/blob/main/blood-cell-image-git/cnn.png)  
 其实说实话，我也不是很懂卷积层都在干什么，但是一次次的实验证明了这个CNN还可以。下面分批展示代码和注释：  
 看看kaggle的GPU有没有跑
 ```
