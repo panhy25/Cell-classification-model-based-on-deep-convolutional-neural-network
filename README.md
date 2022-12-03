@@ -182,6 +182,8 @@ model.add(Conv2D(filters=128, kernel_size=(3, 3), activation='relu'))
 validation_split=0.15
 model.add(Dropout(0.5))
 ```
+以上是我觉得有必要折腾的地方，最重要的就是optimizer，这个换一换会有很大影响，可以在网上找到好多关于这些函数的解析，但是挨个试试总没错。另外有几个卷积层，几个卷积核，验证集的划分，dropout的值都可以换着试试。  
+epoch直接1000，跑到哪算哪，不跑怎么知道哪能收敛。
 
 
 
