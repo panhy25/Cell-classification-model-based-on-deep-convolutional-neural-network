@@ -187,6 +187,75 @@ epoch直接1000，跑到哪算哪，不跑怎么知道哪能收敛。
 ## streamlit
 这真的是拯救了这个项目的好网站，建议给开发者磕一个。  
 ### streamlit是什么
-Streamlit 是一个用于机器学习、数据可视化的 Python 框架，它能几行代码就构建出一个精美的在线 app 应用。
+Streamlit 是一个用于机器学习、数据可视化的 Python 框架，它能几行代码就构建出一个精美的在线 app 应用。非常适合不懂构建网站的小白使用。
+### streamlit代码
+```
+import numpy as np
+from keras.applications.imagenet_utils import decode_predictions
+from keras.preprocessing import image
+from keras.utils import image_utils
+from keras.applications import *
+import cv2
+import streamlit as st
+import os
+import tensorflow as tf
+from PIL import Image
+
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
+
+
+def decode_predictions(file_path):
+    image = image_utils.load_img(file_path, target_size=(224,224))
+    x = image_utils.img_to_array(image)
+    x = np.expand_dims(x, axis=0)
+    x = x/255
+
+    model = tf.keras.models.load_model('/root/my_st/model.h5')
+    y = model(x)
+    y = np.argmax(y, axis=1)
+    return y
+
+st.title('白细胞分类器')
+st.header('白细胞图像上传')
+
+uploaded_file = st.file_uploader("上传一张图片", type=['jpg','png','jpeg'])
+st.sidebar.expander('')
+st.sidebar.subheader('kaggle账号：@liyf279 @panhy25')
+st.sidebar.subheader('github账号：@panhy25')
+st.sidebar.subheader('由于版本的不同，notebook中acc的值和下面展示的结果不同，但应该没有过大的差异')
+st.sidebar.write('https://www.kaggle.com/code/liyf279/blood-cell-predict')
+st.sidebar.write('https://www.kaggle.com/liyf279/streamlit')
+st.sidebar.write('Train_acc:92.09%')
+st.sidebar.write('Val_acc:92.16%')
+st.sidebar.write('Tset_acc:93.12%')
+st.sidebar.subheader('Our CNN model')
+imag1 = Image.open('/root/one.jpg')
+st.sidebar.image(imag1, caption=None, use_column_width=True)
+imag2 = Image.open('/root/two.png')
+st.sidebar.image(imag2, caption=None, use_column_width=True)
+
+if uploaded_file is not None:
+    st.write('上传成功')
+    # 将传入的文件转为Opencv格式
+    file_bytes = np.asarray(bytearray(uploaded_file.read()), dtype=np.uint8)
+    opencv_image = cv2.imdecode(file_bytes, 1)
+    if st.button('test'):
+        # 展示图片
+        st.image(opencv_image, channels="BGR")
+        # 保存图片
+        cv2.imwrite('test.jpg', opencv_image)
+        file_path = 'test.jpg'
+        q = decode_predictions(file_path)
+        dic = {0: 'EOSINOPHIL', 1: 'LYMPHOCYTE', 2: 'MONOCYTES', 3: 'NEUTROPHIL'}
+        for keys in dic:
+            if keys == q:
+                st.write(dic[keys])
+                st.text('Well Done!')
+                st.balloons()
+```
+## 阿里云
+阿里云的部署不是一件容易的事，详细学习的话有很多内容，这里如果只想简单有一个网站，推荐
+https://jackiexiao.github.io/blog/%E6%8A%80%E6%9C%AF/%E4%BD%BF%E7%94%A8docker%E5%92%8Cstreamlit%E9%98%BF%E9%87%8C%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%83%A8%E7%BD%B2%E7%AE%80%E5%8D%95%E7%9A%84%E6%BC%94%E7%A4%BA%E7%BD%91%E9%A1%B5/
+
 
 
